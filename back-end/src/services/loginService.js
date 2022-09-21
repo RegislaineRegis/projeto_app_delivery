@@ -12,7 +12,7 @@ const validateBody = (body) => {
   if (!email || !password) return throwCustomError(400, 'Invalid fields');
   const regex = /\S+@\S+.\S+/;
   const validateEmail = regex.test(email);
-  const validatePassword = password.length > 6;
+  const validatePassword = password.length > 5;
   if (!validateEmail || !validatePassword) return throwCustomError(400, 'Invalid Fields');
 };
 

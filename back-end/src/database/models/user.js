@@ -26,6 +26,6 @@ const attributes = {
 };
 
 module.exports = (sequelize) => {
-  const model = sequelize.define('User', attributes, { tableName: 'Users', timestamps: false })
+  const model = sequelize.define('User', attributes, { tableName: 'users', timestamps: false })
   return model;
 };

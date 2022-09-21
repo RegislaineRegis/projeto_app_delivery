@@ -23,6 +23,6 @@ const attributes = {
 }
 
 module.exports = (sequelize) => {
-  const model = sequelize.define('Product', attributes, { tableName: 'Products', timestamps: false })
+  const model = sequelize.define('Product', attributes, { tableName: 'products', timestamps: false })
   return model;
 };

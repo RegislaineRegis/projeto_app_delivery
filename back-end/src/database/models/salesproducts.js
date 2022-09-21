@@ -27,7 +27,7 @@ const attributes = {
 }
 
 module.exports = (sequelize) => {
-  const model = sequelize.define('SalesProduct', attributes, { tableName: 'SalesProducts', timestamps: false })
+  const model = sequelize.define('SalesProduct', attributes, { tableName: 'salesProducts', timestamps: false })
   model.associate = (models) => {
     models.SalesProduct.belongsToMany(models.Sale, {
       through: model,

@@ -52,7 +52,7 @@ const attributes = {
 }
 
 module.exports = (sequelize) => {
-  const model = sequelize.define('Sale', attributes, { tableName: 'Sales', timestamps: false })
+  const model = sequelize.define('Sale', attributes, { tableName: 'sales', timestamps: false })
   model.associate = (models) => {
     models.Sale.belongsTo(models.User, { 
       through: model,
