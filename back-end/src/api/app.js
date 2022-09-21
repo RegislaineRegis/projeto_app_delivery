@@ -1,9 +1,12 @@
 const express = require('express');
+require('express-async-errors');
+const cors = require('cors');
 const errorHandlerMiddleware = require('../middlewares/errorHandlerMiddleware');
 const loginRoute = require('../routes/loginRoute');
-require('express-async-errors');
 
 const app = express();
+
+app.use(cors());
 
 app.use(express.json());
 
