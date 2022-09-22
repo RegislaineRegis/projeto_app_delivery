@@ -20,14 +20,18 @@ export default function LoginForm() {
   }, [email, password]);
 
   const handleClick = async () => {
-    const api = axios.create({
-      baseURL: 'http://localhost:3001/',
-    });
-    const { data } = await api.post('login', { email, password })
-      .catch(() => setError(true));
-    console.log(data);
-    navigate('/customer/products');
+    try {
+      const api = axios.create({
+        baseURL: 'http://localhost:3001/',
+      });
+      await api.post('login', { email, password });
+      navigate('/customer/products');
+    } catch (err) {
+      setError(true);
+    }
   };
+
+  const handleRegisterButton = () => navigate('/register');
 
   return (
     <div>
@@ -65,6 +69,7 @@ export default function LoginForm() {
         <button
           data-testid="common_login__button-register"
           type="button"
+          onClick={ handleRegisterButton }
         >
           Ainda não tenho conta
         </button>
