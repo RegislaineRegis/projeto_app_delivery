@@ -15,7 +15,7 @@ const checkUser = async (name, email) => {
 
 const createUser = async (body) => {
   const newUser = await models.User.create(body);
-  return newUser;
+  return newUser.dataValues;
 };
 
 module.exports = { validateCreateBody, checkUser, createUser };
