@@ -2,7 +2,6 @@ const md5 = require('md5');
 const { createToken } = require('../services/jwtService');
 const { validateCreateBody, checkUser, createUser } = require('../services/registerService');
 const { validateBody } = require('../services/loginService');
-// const { throwCustomError } = require('../services/utils');
 
 const create = async (req, res) => {
   const { name, password, email, role } = req.body;
