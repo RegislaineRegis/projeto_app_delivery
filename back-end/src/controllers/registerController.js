@@ -4,15 +4,15 @@ const { validateCreateBody, checkUser, createUser } = require('../services/regis
 const { validateBody } = require('../services/loginService');
 
 const create = async (req, res) => {
-  const { name, password, email, role } = req.body;
-  validateBody({ email, password });
+  const { name, password: bodyPassword, email, role } = req.body;
+  validateBody({ email, bodyPassword });
   validateCreateBody({ name, role });
   await checkUser(name, email);
-  const encryptedPass = md5(password);
+  const encryptedPass = md5(bodyPassword);
   const newUser = await createUser({ name, email, password: encryptedPass, role });
-  const { password_, ...info } = newUser;
+  const { password, id, ...info } = newUser;
   const token = createToken(info);
-  return res.status(201).json({ token });
+  return res.status(201).json({ ...info, token });
 };
 
 module.exports = { create };

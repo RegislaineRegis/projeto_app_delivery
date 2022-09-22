@@ -8,11 +8,11 @@ const getUser = async (body) => {
 };
 
 const validateBody = (body) => {
-  const { email, password } = body;
-  if (!email || !password) return throwCustomError(400, 'Invalid fields');
+  const { email, bodyPassword } = body;
+  if (!email || !bodyPassword) return throwCustomError(400, 'Invalid fields');
   const regex = /\S+@\S+.\S+/;
   const validateEmail = regex.test(email);
-  const validatePassword = password.length > 5;
+  const validatePassword = bodyPassword.length > 5;
   if (!validateEmail || !validatePassword) return throwCustomError(400, 'Invalid Fields');
 };
 
