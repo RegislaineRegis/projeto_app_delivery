@@ -11,7 +11,7 @@ const create = async (req, res) => {
   const encryptedPass = md5(bodyPassword);
   const newUser = await createUser({ name, email, password: encryptedPass, role });
   const { password, id, ...info } = newUser;
-  const token = createToken(info);
+  const token = await createToken(info);
   return res.status(201).json({ ...info, token });
 };
 

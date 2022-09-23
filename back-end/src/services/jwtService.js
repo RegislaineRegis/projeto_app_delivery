@@ -2,9 +2,13 @@ const jwt = require('jsonwebtoken');
 const fs = require('fs/promises');
 const throwCustomError = require('./utils');
 
-const secret = await fs.readFile('jwt.evaluation.key', { encoding: "utf-8" });
+const secretJwt = async () => {
+  const string = await fs.readFile('jwt.evaluation.key', { encoding: "utf-8" });
+  return string
+}
 
-const createToken = (data) => {
+const createToken = async (data) => {
+  const secret = await secretJwt();
   const token = jwt.sign(data, secret);
   return token;
 };
