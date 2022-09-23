@@ -10,7 +10,7 @@ const login = async (req, res) => {
   const user = await getUser({ email, encryptedPass });
   if (!user) throwCustomError(404, 'Not found');
   const { id, password, ...info } = user;
-  const token = createToken(info);
+  const token = await createToken(info);
   return res.status(200).json({ ...info, token });
 };
 
