@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
 
 export default function NavBar() {
   const [name, setName] = useState('');
@@ -13,36 +12,38 @@ export default function NavBar() {
     setName(userName);
   }, []);
 
+  const baseURL = 'http://localhost:3000/';
+
   return (
     <nav>
       <ul>
         <li>
-          <Link
-            to="/customer/products"
+          <a
+            href={ `${baseURL}customer/products` }
             data-testid="customer_products__element-navbar-link-products"
           >
             Produtos
-          </Link>
+          </a>
         </li>
         <li>
-          <Link
-            to="/customer/orders"
+          <a
+            href={ `${baseURL}customer/orders` }
             data-testid="customer_products__element-navbar-link-orders"
           >
             Pedidos
-          </Link>
+          </a>
         </li>
       </ul>
       <ul>
         <li data-testid="customer_products__element-navbar-user-full-name">{ name }</li>
         <li>
-          <Link
-            to="/login"
-            data-testid="customer_products__element-navbar-link-logout"
+          <a
+            href={ `${baseURL}login` }
             onClick={ handleLogout }
+            data-testid="customer_products__element-navbar-link-logout"
           >
             Sair
-          </Link>
+          </a>
         </li>
       </ul>
     </nav>
