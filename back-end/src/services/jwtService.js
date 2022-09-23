@@ -4,8 +4,8 @@ const throwCustomError = require('./utils');
 
 const secretJwt = async () => {
   const string = await fs.readFile('jwt.evaluation.key', { encoding: "utf-8" });
-  return string
-}
+  return string;
+};
 
 const createToken = async (data) => {
   const secret = await secretJwt();
@@ -13,9 +13,10 @@ const createToken = async (data) => {
   return token;
 };
 
-const tokenValidation = (token) => {
+const tokenValidation = async (token) => {
   if (!token) throwCustomError(401, 'Token not found');
   try {
+    const secret = await secretJwt();
     const data = jwt.verify(token, secret);
     return data;
   } catch (error) {
