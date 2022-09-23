@@ -18,6 +18,8 @@ app.use('/register', registerRoute);
 
 app.use('/customer', customerRoute);
 
+app.use('/images', express.static('public'));
+
 app.use(errorHandlerMiddleware);
 
 module.exports = app;
