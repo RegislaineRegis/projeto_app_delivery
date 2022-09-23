@@ -3,7 +3,7 @@ const fs = require('fs/promises');
 const throwCustomError = require('./utils');
 
 const secretJwt = async () => {
-  const string = await fs.readFile('jwt.evaluation.key', { encoding: "utf-8" });
+  const string = await fs.readFile('jwt.evaluation.key', { encoding: 'utf-8' });
   return string;
 };
 
