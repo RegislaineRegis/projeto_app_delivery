@@ -7,7 +7,7 @@ export default function ProductCard({ product, setTotal, total }) {
 
   const handleAdd = () => {
     const sum = Number(total) + Number(price);
-    const value = sum.toFixed(2);
+    const value = Number(sum.toFixed(2));
     setInputValue(inputValue + 1);
     setTotal(value);
   };
@@ -15,9 +15,18 @@ export default function ProductCard({ product, setTotal, total }) {
   const handleSub = () => {
     if (inputValue > 0) {
       const sub = Number(total) - Number(price);
-      const value = sub.toFixed(2);
+      const value = Number(sub.toFixed(2));
       setInputValue(inputValue - 1);
       setTotal(value);
+    }
+  };
+
+  const handleChange = (e) => {
+    const { value } = e.target;
+    if (value >= 0) {
+      setInputValue(value);
+      const newTotal = Number((value * price).toFixed(2));
+      setTotal(newTotal);
     }
   };
 
@@ -42,9 +51,9 @@ export default function ProductCard({ product, setTotal, total }) {
       </button>
       <input
         type="number"
-        data-testid={ `customer_products__input-card-quantity-${id}` }
         value={ inputValue }
-        readOnly
+        onChange={ handleChange }
+        data-testid={ `customer_products__input-card-quantity-${id}` }
       />
       <button
         type="button"
