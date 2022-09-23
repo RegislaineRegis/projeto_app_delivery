@@ -1,8 +1,8 @@
 const jwt = require('jsonwebtoken');
+const fs = require('fs/promises');
 const throwCustomError = require('./utils');
-require('dotenv').config();
 
-const secret = 'meusecret';
+const secret = await fs.readFile('jwt.evaluation.key', { encoding: "utf-8" });
 
 const createToken = (data) => {
   const token = jwt.sign(data, secret);

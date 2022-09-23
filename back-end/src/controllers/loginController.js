@@ -4,8 +4,8 @@ const { validateBody, getUser } = require('../services/loginService');
 const { throwCustomError } = require('../services/utils');
 
 const login = async (req, res) => {
-  validateBody(req.body);
   const { password: bodyPassword, email } = req.body;
+  validateBody({ email, bodyPassword });
   const encryptedPass = md5(bodyPassword);
   const user = await getUser({ email, encryptedPass });
   if (!user) throwCustomError(404, 'Not found');
