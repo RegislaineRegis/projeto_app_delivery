@@ -24,7 +24,8 @@ export default function LoginForm() {
       const api = axios.create({
         baseURL: 'http://localhost:3001/',
       });
-      await api.post('login', { email, password });
+      const { data } = await api.post('login', { email, password });
+      localStorage.setItem('user', JSON.stringify(data));
       navigate('/customer/products');
     } catch (err) {
       setError(true);

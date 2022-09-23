@@ -27,7 +27,9 @@ export default function RegisterForm() {
       const api = axios.create({
         baseURL: 'http://localhost:3001/',
       });
-      await api.post('register', { name, email, password, role: 'costumer' });
+      const { data } = await api
+        .post('register', { name, email, password, role: 'costumer' });
+      localStorage.setItem('user', JSON.stringify(data));
       navigate('/customer/products');
     } catch (err) {
       setError(true);
