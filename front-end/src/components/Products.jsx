@@ -28,7 +28,7 @@ export default function Products() {
   }, [total]);
 
   return (
-    <main>
+    <main style={ { display: 'flex', 'flex-wrap': 'wrap' } }>
       { products.map((product) => (
         <ProductCard
           key={ product.id }
@@ -40,9 +40,13 @@ export default function Products() {
       <button
         type="button"
         onClick={ handleClick }
-        data-testid="customer_products__checkout-bottom-value"
+        data-testid="customer_products__button-cart"
+        disabled={ total < 1 }
+        style={ { position: 'fixed' } }
       >
-        { total.toString().replace('.', ',') }
+        <p data-testid="customer_products__checkout-bottom-value">
+          { total.toFixed(2).replace('.', ',') }
+        </p>
       </button>
     </main>
   );
