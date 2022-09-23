@@ -5,4 +5,24 @@ const getAllProducts = async () => {
   return data;
 };
 
-module.exports = { getAllProducts };
+const addNewSale = async (body) => {
+  const { products, userId, sellerId, totalPrice, deliveryAddress,
+    deliveryNumber, saleDate, status } = body;
+  const data = await models.Sale.create({ 
+    userId,
+    sellerId,
+    totalPrice,
+    deliveryAddress,
+    deliveryNumber,
+    saleDate,
+    status });
+  products.forEach(async (product) => {
+    await models.SalesProduct.create({ 
+      saleId: data.id,
+      productId: product.id,
+      quantity: product.quantity });
+  });
+  return data;
+};
+
+module.exports = { getAllProducts, addNewSale };
