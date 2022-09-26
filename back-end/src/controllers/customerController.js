@@ -1,4 +1,4 @@
-const { getAllProducts, addNewSale } = require('../services/customerService');
+const { getAllProducts, addNewSale, getAllSellers } = require('../services/customerService');
 
 const getAll = async (req, res) => {
   const data = await getAllProducts();
@@ -12,4 +12,9 @@ const addSale = async (req, res) => {
   return res.status(201).json(data);
 };
 
-module.exports = { getAll, addSale };
+const getSeller = async (req, res) => {
+  const data = await getAllSellers();
+  return res.status(201).json(data);
+};
+
+module.exports = { getAll, addSale, getSeller };
