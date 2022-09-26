@@ -25,4 +25,11 @@ const addNewSale = async (body) => {
   return data;
 };
 
-module.exports = { getAllProducts, addNewSale };
+const getAllSellers = async () => {
+  const data = await models.User.findAll({ 
+    where: { role: 'seller' },
+    attributes: { exclude: ['password', 'id', 'email', 'role'] } });
+  return data;
+};
+
+module.exports = { getAllProducts, addNewSale, getAllSellers };
