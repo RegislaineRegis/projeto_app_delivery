@@ -4,14 +4,27 @@ const dataId = 'customer_checkout__element-order-table-';
 
 export default function CheckoutTable() {
   const [cart, setCart] = useState([]);
-  const [totalValue, setTotalValue] = useState(0);
+  const [total, setTotal] = useState(0);
+
+  const handleTotal = () => {
+    let totalPrice = 0;
+    cart.forEach((item) => { totalPrice += (+item.price * +item.quantidade); });
+    setTotal(+totalPrice);
+  };
+
+  const handleRemove = (id) => {
+    const remove = cart.filter((item) => +item.id !== +id);
+    setCart(remove);
+  };
 
   useEffect(() => {
     const cartItens = JSON.parse(localStorage.getItem('cartItens'));
-    const cartValue = localStorage.getItem('cartValue');
     setCart(cartItens);
-    setTotalValue(cartValue);
   }, []);
+
+  useEffect(() => {
+    handleTotal();
+  }, [cart]);
 
   return (
     <main>
@@ -40,7 +53,13 @@ export default function CheckoutTable() {
                 { (+item.price * item.quantidade).toFixed(2).replace('.', ',') }
               </td>
               <td data-testid={ `${dataId}remove-${index}` }>
-                <button type="button">Remover</button>
+                <button
+                  name={ item.id }
+                  type="button"
+                  onClick={ (e) => handleRemove(e.target.name) }
+                >
+                  Remover
+                </button>
               </td>
             </tr>
           )) }
@@ -48,7 +67,7 @@ export default function CheckoutTable() {
         <tfoot>
           <tr>
             <td data-testid="customer_checkout__element-order-total-price">
-              { totalValue }
+              { total.toFixed(2).replace('.', ',') }
             </td>
           </tr>
         </tfoot>
