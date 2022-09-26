@@ -6,6 +6,7 @@ import ProductCard from './ProductCard';
 export default function Products() {
   const [products, setProducts] = useState([]);
   const [total, setTotal] = useState(0);
+  const [cartItem, setCartItem] = useState([]);
   const navigate = useNavigate();
 
   const fetchProducts = async () => {
@@ -17,14 +18,17 @@ export default function Products() {
     setProducts(data);
   };
 
-  const handleClick = () => navigate('/customer/checkout');
+  const handleClick = () => {
+    localStorage.setItem('cartItens', JSON.stringify(cartItem));
+    navigate('/customer/checkout');
+  };
 
   useEffect(() => {
     fetchProducts();
   }, []);
 
   useEffect(() => {
-    localStorage.setItem('cart', +total);
+    localStorage.setItem('cartValue', total.toFixed(2).replace('.', ','));
   }, [total]);
 
   return (
@@ -34,6 +38,8 @@ export default function Products() {
           key={ product.id }
           product={ product }
           setTotal={ setTotal }
+          setCartItem={ setCartItem }
+          cartItem={ cartItem }
           total={ total }
         />
       )) }
