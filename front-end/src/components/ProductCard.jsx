@@ -1,14 +1,36 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 
-export default function ProductCard({ product, setTotal, total }) {
+export default function ProductCard({ product, setTotal, total, cartItem, setCartItem }) {
   const [inputValue, setInputValue] = useState(0);
   const { id, name, price, urlImage } = product;
+
+  const handleCartItems = async () => {
+    const obj = {
+      ...product,
+      quantidade: inputValue,
+    };
+    const check = cartItem.findIndex((item) => item.id === obj.id);
+    const failCheck = -1;
+    const newItems = cartItem.filter((item) => item.id !== obj.id);
+    if (check !== failCheck) {
+      const filter = [...newItems, obj].filter((item) => item.quantidade !== 0);
+      setCartItem(filter);
+    } else if (check === failCheck && obj.quantidade !== 0) {
+      const filter = [...cartItem, obj].filter((item) => item.quantidade !== 0);
+      setCartItem(filter);
+    }
+  };
+
+  useEffect(() => {
+    handleCartItems();
+  }, [inputValue]);
 
   const handleAdd = () => {
     const sum = Number(total) + Number(price);
     const value = Number(sum.toFixed(2));
-    setInputValue(inputValue + 1);
+    setInputValue(+inputValue + 1);
+    handleCartItems();
     setTotal(value);
   };
 
@@ -16,14 +38,14 @@ export default function ProductCard({ product, setTotal, total }) {
     if (inputValue > 0) {
       const sub = Number(total) - Number(price);
       const value = Number(sub.toFixed(2));
-      setInputValue(inputValue - 1);
+      setInputValue(+inputValue - 1);
       setTotal(value);
     }
   };
 
   const handleChange = (e) => {
     const { value } = e.target;
-    if (value >= 0) {
+    if (value > 0) {
       setInputValue(value);
       const newTotal = Number((value * price).toFixed(2));
       setTotal(newTotal);
@@ -75,4 +97,6 @@ ProductCard.propTypes = {
   }).isRequired,
   setTotal: PropTypes.func.isRequired,
   total: PropTypes.number.isRequired,
+  setCartItem: PropTypes.func.isRequired,
+  cartItem: PropTypes.arrayOf(PropTypes.shape({ a: 'a' })).isRequired,
 };
