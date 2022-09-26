@@ -28,7 +28,7 @@ const addNewSale = async (body) => {
 const getAllSellers = async () => {
   const data = await models.User.findAll({ 
     where: { role: 'seller' },
-    attributes: { exclude: ['password', 'id', 'email', 'role'] } });
+    attributes: { exclude: ['password', 'email', 'role'] } });
   return data;
 };
 
