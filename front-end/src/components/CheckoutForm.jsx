@@ -46,8 +46,7 @@ export default function CheckoutForm() {
     });
     const { data } = await api
       .post('customer/checkout', info, { headers });
-    console.log(data);
-    navigate(`customer/order/${data.id}`);
+    navigate(`/customer/order/${data.id}`);
   };
 
   const getSellers = async () => {
@@ -68,6 +67,10 @@ export default function CheckoutForm() {
   useEffect(() => {
     getSellers();
   }, []);
+
+  useEffect(() => {
+    if (sellers.length > 0)setDropdown(sellers[0].name);
+  }, [sellers]);
 
   const handleDropdown = (value) => {
     setDropdown(value);
@@ -91,7 +94,6 @@ export default function CheckoutForm() {
           value={ dropdown }
           onChange={ (e) => handleDropdown(e.target.value) }
         >
-          <option value="" disabled hidden> </option>
           { sellers.map((seller) => (
             <option value={ seller.name } key={ seller.id }>
               { seller.name }
