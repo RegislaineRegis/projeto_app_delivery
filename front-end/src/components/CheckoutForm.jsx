@@ -73,7 +73,7 @@ export default function CheckoutForm() {
         <input
           type="number"
           id="address_number"
-          data-testid={ `${dataId}input_address-number` }
+          data-testid={ `${dataId}input-address-number` }
           value={ number }
           onChange={ (e) => handleNumber(e.target.value) }
         />
