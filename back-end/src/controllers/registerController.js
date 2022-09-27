@@ -12,7 +12,7 @@ const create = async (req, res) => {
   const newUser = await createUser({ name, email, password: encryptedPass, role });
   const { password, id, ...info } = newUser;
   const token = await createToken(info);
-  return res.status(201).json({ ...info, token });
+  return res.status(201).json({ ...info, id, token });
 };
 
 module.exports = { create };
