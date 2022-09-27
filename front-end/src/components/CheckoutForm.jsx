@@ -16,17 +16,16 @@ export default function CheckoutForm() {
 
   const handleTotal = () => {
     let totalPrice = 0;
-    cart.forEach((item) => { totalPrice += (+item.price * +item.quantidade); });
+    cart.forEach((item) => { totalPrice += (+item.price * +item.quantity); });
     return totalPrice;
   };
 
   const handleData = () => {
-    const { id } = sellers.find((seller) => seller.name === dropdown);
     const total = handleTotal();
     const obj = {
       products: cart,
       userId: user.id,
-      sellerId: id,
+      sellerId: dropdown,
       totalPrice: +total.toFixed(2),
       deliveryAddress: address,
       deliveryNumber: number,
@@ -37,6 +36,7 @@ export default function CheckoutForm() {
 
   const handleButton = async () => {
     const obj = handleData();
+    console.log(obj);
     const { authorization, ...info } = obj;
     const headers = {
       Authorization: authorization,
@@ -46,7 +46,7 @@ export default function CheckoutForm() {
     });
     const { data } = await api
       .post('customer/checkout', info, { headers });
-    navigate(`/customer/order/${data.id}`);
+    navigate(`/customer/orders/${data.id}`);
   };
 
   const getSellers = async () => {
@@ -69,7 +69,7 @@ export default function CheckoutForm() {
   }, []);
 
   useEffect(() => {
-    if (sellers.length > 0)setDropdown(sellers[0].name);
+    if (sellers.length > 0)setDropdown(sellers[0].id);
   }, [sellers]);
 
   const handleDropdown = (value) => {
@@ -95,7 +95,7 @@ export default function CheckoutForm() {
           onChange={ (e) => handleDropdown(e.target.value) }
         >
           { sellers.map((seller) => (
-            <option value={ seller.name } key={ seller.id }>
+            <option value={ seller.id } key={ seller.id }>
               { seller.name }
             </option>
           )) }

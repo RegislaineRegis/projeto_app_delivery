@@ -8,7 +8,7 @@ export default function CheckoutTable() {
 
   const handleTotal = () => {
     let totalPrice = 0;
-    cart.forEach((item) => { totalPrice += (+item.price * +item.quantidade); });
+    cart.forEach((item) => { totalPrice += (+item.price * +item.quantity); });
     setTotal(+totalPrice);
   };
 
@@ -45,12 +45,12 @@ export default function CheckoutTable() {
             <tr key={ item.id }>
               <td data-testid={ `${dataId}item-number-${index}` }>{ index + 1 }</td>
               <td data-testid={ `${dataId}name-${index}` }>{ item.name }</td>
-              <td data-testid={ `${dataId}quantity-${index}` }>{ item.quantidade }</td>
+              <td data-testid={ `${dataId}quantity-${index}` }>{ item.quantity }</td>
               <td data-testid={ `${dataId}unit-price-${index}` }>
                 { (+item.price).toFixed(2).replace('.', ',') }
               </td>
               <td data-testid={ `${dataId}sub-total-${index}` }>
-                { (+item.price * item.quantidade).toFixed(2).replace('.', ',') }
+                { (+item.price * item.quantity).toFixed(2).replace('.', ',') }
               </td>
               <td data-testid={ `${dataId}remove-${index}` }>
                 <button

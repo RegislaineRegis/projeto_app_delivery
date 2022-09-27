@@ -28,7 +28,7 @@ export default function Products() {
   }, []);
 
   return (
-    <main style={ { display: 'flex', 'flex-wrap': 'wrap' } }>
+    <main style={ { display: 'flex', flexWrap: 'wrap' } }>
       { products.map((product) => (
         <ProductCard
           key={ product.id }
