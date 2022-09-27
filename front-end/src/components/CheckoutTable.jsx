@@ -4,14 +4,27 @@ const dataId = 'customer_checkout__element-order-table-';
 
 export default function CheckoutTable() {
   const [cart, setCart] = useState([]);
-  const [totalValue, setTotalValue] = useState(0);
+  const [total, setTotal] = useState(0);
+
+  const handleTotal = () => {
+    let totalPrice = 0;
+    cart.forEach((item) => { totalPrice += (+item.price * +item.quantity); });
+    setTotal(+totalPrice);
+  };
+
+  const handleRemove = (id) => {
+    const remove = cart.filter((item) => +item.id !== +id);
+    setCart(remove);
+  };
 
   useEffect(() => {
     const cartItens = JSON.parse(localStorage.getItem('cartItens'));
-    const cartValue = localStorage.getItem('cartValue');
     setCart(cartItens);
-    setTotalValue(cartValue);
   }, []);
+
+  useEffect(() => {
+    handleTotal();
+  }, [cart]);
 
   return (
     <main>
@@ -32,15 +45,21 @@ export default function CheckoutTable() {
             <tr key={ item.id }>
               <td data-testid={ `${dataId}item-number-${index}` }>{ index + 1 }</td>
               <td data-testid={ `${dataId}name-${index}` }>{ item.name }</td>
-              <td data-testid={ `${dataId}quantity-${index}` }>{ item.quantidade }</td>
+              <td data-testid={ `${dataId}quantity-${index}` }>{ item.quantity }</td>
               <td data-testid={ `${dataId}unit-price-${index}` }>
                 { (+item.price).toFixed(2).replace('.', ',') }
               </td>
               <td data-testid={ `${dataId}sub-total-${index}` }>
-                { (+item.price * item.quantidade).toFixed(2).replace('.', ',') }
+                { (+item.price * item.quantity).toFixed(2).replace('.', ',') }
               </td>
               <td data-testid={ `${dataId}remove-${index}` }>
-                <button type="button">Remover</button>
+                <button
+                  name={ item.id }
+                  type="button"
+                  onClick={ (e) => handleRemove(e.target.name) }
+                >
+                  Remover
+                </button>
               </td>
             </tr>
           )) }
@@ -48,7 +67,7 @@ export default function CheckoutTable() {
         <tfoot>
           <tr>
             <td data-testid="customer_checkout__element-order-total-price">
-              { totalValue }
+              { total.toFixed(2).replace('.', ',') }
             </td>
           </tr>
         </tfoot>

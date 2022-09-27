@@ -8,16 +8,16 @@ export default function ProductCard({ product, setTotal, total, cartItem, setCar
   const handleCartItems = async () => {
     const obj = {
       ...product,
-      quantidade: inputValue,
+      quantity: inputValue,
     };
     const check = cartItem.findIndex((item) => item.id === obj.id);
     const failCheck = -1;
     const newItems = cartItem.filter((item) => item.id !== obj.id);
     if (check !== failCheck) {
-      const filter = [...newItems, obj].filter((item) => item.quantidade !== 0);
+      const filter = [...newItems, obj].filter((item) => item.quantity !== 0);
       setCartItem(filter);
-    } else if (check === failCheck && obj.quantidade !== 0) {
-      const filter = [...cartItem, obj].filter((item) => item.quantidade !== 0);
+    } else if (check === failCheck && obj.quantity !== 0) {
+      const filter = [...cartItem, obj].filter((item) => item.quantity !== 0);
       setCartItem(filter);
     }
   };

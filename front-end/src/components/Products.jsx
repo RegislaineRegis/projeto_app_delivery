@@ -27,12 +27,8 @@ export default function Products() {
     fetchProducts();
   }, []);
 
-  useEffect(() => {
-    localStorage.setItem('cartValue', total.toFixed(2).replace('.', ','));
-  }, [total]);
-
   return (
-    <main style={ { display: 'flex', 'flex-wrap': 'wrap' } }>
+    <main style={ { display: 'flex', flexWrap: 'wrap' } }>
       { products.map((product) => (
         <ProductCard
           key={ product.id }

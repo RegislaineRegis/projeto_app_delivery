@@ -43,7 +43,8 @@ const attributes = {
   saleDate: {
     allowNull: false,
     type: DataTypes.DATE,
-    field: 'sale_date'
+    field: 'sale_date',
+    defaultValue: DataTypes.NOW,
   },
   status: {
     allowNull: false,

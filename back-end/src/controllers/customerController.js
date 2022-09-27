@@ -1,4 +1,5 @@
 const { getAllProducts, addNewSale, getAllSellers } = require('../services/customerService');
+const { tokenValidation } = require('../services/jwtService');
 
 const getAll = async (req, res) => {
   const data = await getAllProducts();
@@ -6,8 +7,8 @@ const getAll = async (req, res) => {
 };
 
 const addSale = async (req, res) => {
-  // const { products, userId, sellerId, totalPrice, deliveryAddress,
-  //    deliveryNumber, saleDate, status } = req.body;
+  const { authorization } = req.headers;
+  await tokenValidation(authorization);
   const data = await addNewSale(req.body);
   return res.status(201).json(data);
 };

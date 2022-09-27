@@ -11,7 +11,7 @@ const login = async (req, res) => {
   if (!user) throwCustomError(404, 'Not found');
   const { id, password, ...info } = user;
   const token = await createToken(info);
-  return res.status(200).json({ ...info, token });
+  return res.status(200).json({ ...info, id, token });
 };
 
 module.exports = { login };
