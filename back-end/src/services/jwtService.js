@@ -1,6 +1,6 @@
 const jwt = require('jsonwebtoken');
 const fs = require('fs/promises');
-const throwCustomError = require('./utils');
+const { throwCustomError } = require('./utils');
 
 const secretJwt = async () => {
   const string = await fs.readFile('jwt.evaluation.key', { encoding: 'utf-8' });
