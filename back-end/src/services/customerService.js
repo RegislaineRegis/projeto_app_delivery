@@ -18,7 +18,7 @@ const addNewSale = async (body) => {
   await Promise.all(products.map((product) => {
    const saleProduct = models.SalesProduct.create({ 
       saleId: dataValues.id,
-      productId: product.productId,
+      productId: product.id,
       quantity: product.quantity });
       return saleProduct;
   }));

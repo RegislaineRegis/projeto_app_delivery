@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-// import { useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 const dataId = 'customer_checkout__';
 
@@ -9,12 +9,46 @@ export default function CheckoutForm() {
   const [address, setAddress] = useState('');
   const [number, setNumber] = useState('');
   const [sellers, setSellers] = useState([]);
+  const [cart, setCart] = useState([]);
+  const [user, setUser] = useState({});
 
-  // const navigate = useNavigate();
+  const navigate = useNavigate();
 
-  // const handleOrder = () => {
-  //   navigate('/customer');
-  // };
+  const handleTotal = () => {
+    let totalPrice = 0;
+    cart.forEach((item) => { totalPrice += (+item.price * +item.quantidade); });
+    return totalPrice;
+  };
+
+  const handleData = () => {
+    const { id } = sellers.find((seller) => seller.name === dropdown);
+    const total = handleTotal();
+    const obj = {
+      products: cart,
+      userId: user.id,
+      sellerId: id,
+      totalPrice: +total.toFixed(2),
+      deliveryAddress: address,
+      deliveryNumber: number,
+      authorization: user.token,
+    };
+    return obj;
+  };
+
+  const handleButton = async () => {
+    const obj = handleData();
+    const { authorization, ...info } = obj;
+    const headers = {
+      Authorization: authorization,
+    };
+    const api = axios.create({
+      baseURL: 'http://localhost:3001/',
+    });
+    const { data } = await api
+      .post('customer/checkout', info, { headers });
+    console.log(data);
+    navigate(`customer/order/${data.id}`);
+  };
 
   const getSellers = async () => {
     const api = axios.create({
@@ -23,6 +57,13 @@ export default function CheckoutForm() {
     const { data } = await api.get('customer/checkout');
     setSellers(data);
   };
+
+  useEffect(() => {
+    const cartItens = JSON.parse(localStorage.getItem('cartItens'));
+    const userInfos = JSON.parse(localStorage.getItem('user'));
+    setCart(cartItens);
+    setUser(userInfos);
+  }, []);
 
   useEffect(() => {
     getSellers();
@@ -81,6 +122,7 @@ export default function CheckoutForm() {
       <button
         type="button"
         data-testid={ `${dataId}button-submit-order` }
+        onClick={ handleButton }
       >
         FINALIZAR PEDIDO
       </button>
